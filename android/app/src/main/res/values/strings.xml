@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">duepiuapp</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBTmaZb7uDBRYSmnRant2g6wAXQeKy2xk8</string>
+</resources>
