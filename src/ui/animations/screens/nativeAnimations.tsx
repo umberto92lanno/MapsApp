@@ -40,13 +40,13 @@ export const NativeAnimations = () => {
               {
                 scale: animated,
               },
-              // {
-              //   rotate: animated.interpolate({
-              //     inputRange: [1, 3],
-              //     outputRange: ['0deg', '360deg'],
-              //     extrapolate: 'clamp',
-              //   }),
-              // },
+              {
+                rotate: animated.interpolate({
+                  inputRange: [1, 3],
+                  outputRange: ['0deg', '360deg'],
+                  extrapolate: 'clamp',
+                }),
+              },
             ],
           }}
         />

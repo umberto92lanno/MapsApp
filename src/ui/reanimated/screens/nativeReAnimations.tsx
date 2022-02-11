@@ -4,12 +4,17 @@ import React, {useCallback, useRef} from 'react';
 import Animated, {
   interpolate,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
 export const NativeReAnimations = () => {
   const animated = useSharedValue(0);
+  const rotateAnimated = useDerivedValue(() => {
+    console.log(animated.value);
+    return animated.value === 0 ? withTiming('0deg') : withTiming('360deg');
+  }, [animated.value]);
 
   const squareStyles = useAnimatedStyle(() => {
     return {
@@ -18,9 +23,9 @@ export const NativeReAnimations = () => {
         {
           scale: interpolate(animated.value, [0, 3], [1, 3]),
         },
-        // {
-        //   rotate: interpolate(animated.value, [0, 1], ['0deg', '360deg']),
-        // },
+        {
+          rotate: interpolate(animated.value, [0, 3], [0, 360]) + 'deg',
+        },
       ],
     };
   });

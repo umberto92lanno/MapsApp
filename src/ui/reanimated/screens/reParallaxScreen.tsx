@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Image, StyleSheet, useWindowDimensions, View } from "react-native";
+import React, {useCallback} from 'react';
+import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
 import Animated, {
   Extrapolation,
-  interpolate, runOnUI,
+  interpolate,
   useAnimatedRef,
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 export const ReParallaxScreen = () => {
   const animated = useSharedValue(0);
