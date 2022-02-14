@@ -33,7 +33,7 @@ public class Utils {
             public void run() {
                 callback.success();
             }
-        }, 1, time * 1000);
+        }, 1, time);
     }
 
     void showAlert(Context context, UtilsCallback callback) {

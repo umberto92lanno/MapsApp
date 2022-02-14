@@ -14,6 +14,9 @@
 		6172F2D35A4C3AA820D92908 /* libPods-duepiuapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-duepiuapp.a */; };
 		7EF68E3733C33B6898317E18 /* libPods-duepiuapp-duepiuappTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-duepiuapp-duepiuappTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		ED210DD227BAA6DD00D1A2A4 /* NativeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED210DD127BAA6DD00D1A2A4 /* NativeUtils.swift */; };
+		ED210DD427BAA78200D1A2A4 /* NativeUtilsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = ED210DD327BAA78200D1A2A4 /* NativeUtilsBridge.m */; };
+		ED210DD627BAA82800D1A2A4 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED210DD527BAA82800D1A2A4 /* Utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,10 @@
 		ABFE59519B596E51CEFDCCC0 /* libPods-duepiuapp-duepiuappTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-duepiuapp-duepiuappTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-duepiuapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-duepiuapp.debug.xcconfig"; path = "Target Support Files/Pods-duepiuapp/Pods-duepiuapp.debug.xcconfig"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-duepiuapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-duepiuapp.release.xcconfig"; path = "Target Support Files/Pods-duepiuapp/Pods-duepiuapp.release.xcconfig"; sourceTree = "<group>"; };
+		ED210DD027BAA6DD00D1A2A4 /* duepiuapp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "duepiuapp-Bridging-Header.h"; sourceTree = "<group>"; };
+		ED210DD127BAA6DD00D1A2A4 /* NativeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeUtils.swift; sourceTree = "<group>"; };
+		ED210DD327BAA78200D1A2A4 /* NativeUtilsBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NativeUtilsBridge.m; sourceTree = "<group>"; };
+		ED210DD527BAA82800D1A2A4 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -86,6 +93,8 @@
 		13B07FAE1A68108700A75B9A /* duepiuapp */ = {
 			isa = PBXGroup;
 			children = (
+				ED210DD027BAA6DD00D1A2A4 /* duepiuapp-Bridging-Header.h */,
+				ED210DCF27BAA67800D1A2A4 /* NativeMethods */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -145,8 +154,17 @@
 				6C97AB639B58BBB4B15BBE30 /* Pods-duepiuapp-duepiuappTests.debug.xcconfig */,
 				1D0AE47A65C8663E3B452821 /* Pods-duepiuapp-duepiuappTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		ED210DCF27BAA67800D1A2A4 /* NativeMethods */ = {
+			isa = PBXGroup;
+			children = (
+				ED210DD527BAA82800D1A2A4 /* Utils.swift */,
+				ED210DD127BAA6DD00D1A2A4 /* NativeUtils.swift */,
+				ED210DD327BAA78200D1A2A4 /* NativeUtilsBridge.m */,
+			);
+			name = NativeMethods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,7 +226,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1300;
 					};
 				};
 			};
@@ -411,6 +429,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED210DD627BAA82800D1A2A4 /* Utils.swift in Sources */,
+				ED210DD227BAA6DD00D1A2A4 /* NativeUtils.swift in Sources */,
+				ED210DD427BAA78200D1A2A4 /* NativeUtilsBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -431,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6C97AB639B58BBB4B15BBE30 /* Pods-duepiuapp-duepiuappTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -458,6 +480,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D0AE47A65C8663E3B452821 /* Pods-duepiuapp-duepiuappTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = duepiuappTests/Info.plist;
@@ -498,6 +521,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = duepiuapp;
+				SWIFT_OBJC_BRIDGING_HEADER = "duepiuapp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -523,6 +547,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = duepiuapp;
+				SWIFT_OBJC_BRIDGING_HEADER = "duepiuapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

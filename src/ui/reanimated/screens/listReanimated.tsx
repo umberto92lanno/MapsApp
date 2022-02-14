@@ -1,162 +1,136 @@
-import React, {useState} from 'react';
-import {Button, Dimensions, Text, View} from 'react-native';
+import React, {
+  memo,
+  NamedExoticComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {
+  Button,
+  Dimensions,
+  FlatList,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Animated, {
+  AnimateStyle,
+  BaseAnimationBuilder,
+  ComplexAnimationBuilder,
+  EntryAnimationsValues,
+  ExitAnimationsValues,
   Layout,
   LayoutAnimation,
   LayoutAnimationsValues,
+  LightSpeedInLeft,
+  SlideInLeft,
+  SlideInRight,
+  StyleProps,
   Transition,
   withDelay,
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
-// function CustomLayoutTransition(values) {
-//   'worklet';
-//   return {
-//     animations: {
-//       originX: withTiming(values.targetOriginX, {duration: 1000}),
-//       originY: withDelay(
-//         1000,
-//         withTiming(values.targetOriginY, {duration: 1000}),
-//       ),
-//       width: withSpring(values.targetWidth),
-//       height: withSpring(values.targetHeight),
-//     },
-//     initialValues: {
-//       originX: values.currentOriginX,
-//       originY: values.currentOriginY,
-//       width: values.currentWidth,
-//       height: values.currentHeight,
-//     },
-//   };
-// }
-//
-// function Box({label, state}: {label: string; state: boolean}) {
-//   const ind = label.charCodeAt(0) - 'A'.charCodeAt(0);
-//   const delay = 300 * ind;
-//   return (
-//     <Animated.View
-//       layout={CustomLayoutTransition}
-//       style={[
-//         { flex: 1, borderWidth: 1 },
-//         {
-//           flexDirection: state ? 'row' : 'row-reverse',
-//           height: state ? 30 : 60,
-//         },
-//       ]}>
-//       <Text> {label} </Text>
-//     </Animated.View>
-//   );
-// }
-//
-// export function ListReanimated(): React.ReactElement {
-//   const [state, setState] = useState(true);
-//   return (
-//     <View style={{marginTop: 30}}>
-//       <View style={{height: 300}}>
-//         <View style={{flexDirection: state ? 'row' : 'column'}}>
-//           {state && <Box key="a" label="A" state={state} />}
-//           <Box key="b" label="B" state={state} />
-//           {!state && <Box key="a" label="A" state={state} />}
-//           <Box key="c" label="C" state={state} />
-//         </View>
-//       </View>
-//
-//       <Button
-//         onPress={() => {
-//           setState(!state);
-//         }}
-//         title="toggle"
-//       />
-//     </View>
-//   );
-// }
+const data = [
+  {title: 'data1', id: 1},
+  {title: 'data2', id: 2},
+  {title: 'data3', id: 3},
+  {title: 'data4', id: 4},
+  {title: 'data5', id: 5},
+  {title: 'data6', id: 6},
+  {title: 'data7', id: 7},
+];
 
-// const CustomEnteringAnimation = (
-//   values: LayoutAnimationsValues,
-// ): LayoutAnimation => {
-//   'worklet';
-//
-//   const animations = {
-//     // your animations
-//     originX: withTiming(values.targetOriginX, {duration: 2000}),
-//   };
-//   const initialValues = {
-//     originX: -1000,
-//     originY: values.currentOriginY,
-//     width: values.currentWidth,
-//     height: values.currentHeight,
-//   };
-//   const callback = (finished: boolean) => {
-//     // optional callback that will fire when layout animation ends
-//   };
-//   return {
-//     initialValues,
-//     animations,
-//   };
-// };
-//
-// export const ListReanimated = () => {
-//   return (
-//     <View style={{flex: 1, justifyContent: 'center'}}>
-//       <Animated.View
-//         style={{height: 40, width: 300, backgroundColor: 'blue'}}
-//         layout={CustomEnteringAnimation}
-//       />
-//     </View>
-//   );
-// };
+interface AnimatedRowProps {
+  title: string;
+  index: number;
+}
 
-const width = Dimensions.get('window').width;
-
-function CardView() {
-  const entering = targetValues => {
+const EnteringAnimationForList =
+  ({delay = 0}) =>
+  (values: EntryAnimationsValues): LayoutAnimation => {
     'worklet';
-    const animations = {
-      originX: withTiming(targetValues.originX, {duration: 3000}),
-      opacity: withTiming(1, {duration: 2000}),
-      borderRadius: withDelay(4000, withTiming(30, {duration: 3000})),
-      transform: [
-        {rotate: withTiming('0deg', {duration: 4000})},
-        {scale: withTiming(1, {duration: 3500})},
-      ],
+    const animations: AnimateStyle<StyleProps> = {
+      originX: withDelay(
+        delay,
+        withTiming(values.targetOriginX, {duration: 400}),
+      ),
+      opacity: withTiming(1, {duration: 1000}),
     };
-    const initialValues = {
-      originX: -width,
+    const initialValues: StyleProps = {
+      originX: -1000,
       opacity: 0,
-      borderRadius: 10,
-      transform: [{rotate: '90deg'}, {scale: 0.5}],
     };
     return {
-      initialValues,
       animations,
+      initialValues,
     };
   };
 
-  return (
-    <Animated.View style={{height: 40, width: 200}} entering={entering}>
-      <Text> Card Example </Text>
-    </Animated.View>
-  );
-}
+const ExitingAnimationForList = (
+  values: ExitAnimationsValues,
+): LayoutAnimation => {
+  'worklet';
+  const animations: AnimateStyle<StyleProps> = {
+    originX: withTiming(-1000, {duration: 10000}),
+    // opacity: withTiming(1, {duration: 1000}),
+  };
+  const initialValues: StyleProps = {
+    originX: values.currentOriginX,
+  };
+  return {
+    animations,
+    initialValues,
+  };
+};
 
-class AnimatedView extends React.Component {
-  render() {
-    return <View style={{height: 40, width: 300, backgroundColor: 'blue'}} />;
-  }
-}
-
-const AnimatedPath = Animated.createAnimatedComponent(AnimatedView);
+const AnimatedRow: NamedExoticComponent<AnimatedRowProps> = memo(
+  ({title, index}) => {
+    return (
+      <Animated.View
+        entering={EnteringAnimationForList({delay: 100 * index})}
+        exiting={ExitingAnimationForList}
+        style={{
+          height: 60,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'grey',
+          borderRadius: 8,
+        }}>
+        <Text>{title}</Text>
+      </Animated.View>
+    );
+  },
+);
 
 export const ListReanimated = () => {
+  const [localData, setLocalData] = useState(data);
+
+  const renderItem = useCallback(({item, index}) => {
+    return <AnimatedRow title={item.title} index={index} />;
+  }, []);
+  const ItemSeparatorComponent = useCallback(
+    () => <View style={{height: 20}} />,
+    [],
+  );
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
-      {/*<Animated.View*/}
-      {/*  style={{height: 40, width: 300, backgroundColor: 'blue'}}*/}
-      {/*  layout={CustomEnteringAnimation}*/}
-      {/*/>*/}
-      {/*<CardView />*/}
-      <AnimatedPath layout={Layout.duration(3000)} />
+      <Animated.FlatList
+        data={localData}
+        renderItem={renderItem}
+        ItemSeparatorComponent={ItemSeparatorComponent}
+        contentContainerStyle={{paddingHorizontal: 20}}
+      />
+      <Button
+        title="Remove"
+        onPress={() => {
+          const dataToSplice = [...localData];
+          dataToSplice.splice(0, 1);
+          // setD([...d.splice(0, 1)]);
+          setLocalData(dataToSplice);
+        }}
+      />
     </View>
   );
 };

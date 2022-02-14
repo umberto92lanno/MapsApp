@@ -11,13 +11,16 @@ import {ReParallaxScreen} from './ui/reanimated/screens/reParallaxScreen';
 import {ReTransitioner} from './ui/reanimated/screens/reTransitioner';
 import {NavigationContainer} from '@react-navigation/native';
 import {BottomTab} from './services/navigation/stacks/bottom.tab';
-import {setTimer} from './nativeModules/nativeUtils/nativeUtils';
+import { getInitialValues, isDarkMode, setTimer, showAlert } from "./nativeModules/nativeUtils/nativeUtils";
 
 const App = () => {
   useEffect(() => {
-    setTimer(5000)
-      .then(() => console.log('evviva'))
-      .catch(console.warn);
+    // timer
+    // setTimer(5000, (time) => console.warn('timer', time));
+    // showAlert(console.log);
+    //isDarkMode
+    // isDarkMode().then(console.warn);
+    // console.log('version', getInitialValues().version);
   }, []);
   return (
     <Provider store={store}>

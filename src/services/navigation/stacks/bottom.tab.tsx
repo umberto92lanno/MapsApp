@@ -115,7 +115,7 @@ export const BottomTabBar = (props: BottomTabBarProps) => {
 export const BottomTab = () => {
   return (
     <Tab.Navigator tabBar={props => <BottomTabBar {...props} />}>
-      <Tab.Screen name="Screen1" component={ListReanimated} />
+      {/*<Tab.Screen name="Screen1" component={ListReanimated} />*/}
       <Tab.Screen name="Screen2" component={ReParallaxScreen} />
       <Tab.Screen name="Screen3" component={NativeReAnimations} />
       <Tab.Screen name="Screen4" component={NativeAnimations} />
